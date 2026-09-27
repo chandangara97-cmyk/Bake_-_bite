@@ -1,0 +1,23 @@
+const products=[
+{id:1,name:"Chocolate Cake",cat:"cakes",price:650,img:"https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=85"},
+{id:2,name:"Red Velvet Cake",cat:"cakes",price:750,img:"https://images.unsplash.com/photo-1586788680434-30d324b2d46f?auto=format&fit=crop&w=800&q=85"},
+{id:3,name:"Pineapple Cake",cat:"cakes",price:700,img:"https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=800&q=85"},
+{id:4,name:"Brown Bread",cat:"bakery",price:40,img:"https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=85"},
+{id:5,name:"Chocolate Muffin",cat:"bakery",price:120,img:"https://images.unsplash.com/photo-1558303053-7c2b6e6d1b57?auto=format&fit=crop&w=800&q=85"},
+{id:6,name:"Croissant",cat:"bakery",price:70,img:"https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=85"},
+{id:7,name:"Garlic Bread",cat:"bakery",price:80,img:"https://images.unsplash.com/photo-1619535860434-cf9b902a6c8f?auto=format&fit=crop&w=800&q=85"},
+{id:8,name:"Margherita Pizza",cat:"pizza",price:240,img:"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=85"},
+{id:9,name:"Farm House Pizza",cat:"pizza",price:320,img:"https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=800&q=85"},
+{id:10,name:"Chicken Supreme",cat:"pizza",price:380,img:"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=85"}];
+const money=n=>"₹"+n.toLocaleString("en-IN");
+const cart=()=>JSON.parse(localStorage.bb_cart||"[]");
+function save(c){localStorage.bb_cart=JSON.stringify(c);count()}
+function count(){document.querySelectorAll(".cartcount").forEach(e=>e.textContent=cart().reduce((a,x)=>a+x.qty,0))}
+function addToCart(id){let c=cart(),x=c.find(i=>i.id==id);x?x.qty++:c.push({id:+id,qty:1});save(c);alert("Added to cart")}
+function card(p){return `<article class="card"><a href="product.html?id=${p.id}"><img src="${p.img}" alt="${p.name}"></a><div class="cardbody"><h3>${p.name}</h3><div class="row"><span class="price">${money(p.price)}</span><button class="btn" onclick="addToCart(${p.id})">Add to Cart</button></div></div></article>`}
+function grid(id,cat){let e=document.getElementById(id);if(e)e.innerHTML=products.filter(p=>!cat||p.cat==cat).map(card).join("")}
+function renderCart(){let e=document.getElementById("cartItems");if(!e)return;let c=cart(),sub=0;e.innerHTML=c.length?c.map(x=>{let p=products.find(q=>q.id==x.id);sub+=p.price*x.qty;return `<div class="cartitem"><img src="${p.img}"><div><b>${p.name}</b><div class="muted">${money(p.price)}</div><div class="qty"><button onclick="qty(${p.id},-1)">−</button>${x.qty}<button onclick="qty(${p.id},1)">+</button></div></div><span class="price">${money(p.price*x.qty)}</span></div>`}).join(""):"<p>Your cart is empty.</p>";document.querySelectorAll("[data-sub]").forEach(e=>e.textContent=money(sub));document.querySelectorAll("[data-total]").forEach(e=>e.textContent=money(sub+(sub?50:0)))}
+function qty(id,d){let c=cart(),x=c.find(i=>i.id==id);if(x)x.qty+=d;save(c.filter(x=>x.qty>0));renderCart()}
+function loadProduct(){let e=document.getElementById("productView");if(!e)return;let id=+(new URLSearchParams(location.search).get("id")||1),p=products.find(x=>x.id==id)||products[0];e.innerHTML=`<div><img src="${p.img}" alt="${p.name}"></div><div><div class="muted">${p.cat.toUpperCase()}</div><h1>${p.name}</h1><div class="price" style="font-size:28px">${money(p.price)}</div><p class="muted" style="line-height:1.7">Freshly prepared by Bake & Bite using quality ingredients. Choose your preferred option and add it to your order.</p><div class="options"><button class="option">Regular</button><button class="option">Large</button><button class="option">Premium</button></div><button class="btn orange" onclick="addToCart(${p.id})">Add to Cart</button></div>`}
+function placeOrder(){if(!cart().length)return alert("Your cart is empty");let total=cart().reduce((a,x)=>a+products.find(p=>p.id==x.id).price*x.qty,0)+50;localStorage.bb_order=JSON.stringify({id:"BB"+Date.now().toString().slice(-8),total,status:"Preparing"});localStorage.removeItem("bb_cart");location.href="confirmation.html"}
+document.addEventListener("DOMContentLoaded",()=>{count();grid("allGrid");grid("bakeryGrid","bakery");grid("cakeGrid","cakes");grid("pizzaGrid","pizza");renderCart();loadProduct();let o=JSON.parse(localStorage.bb_order||"null");document.querySelectorAll("[data-order-id]").forEach(e=>e.textContent=o?o.id:"—");document.querySelectorAll("[data-order-total]").forEach(e=>e.textContent=o?money(o.total):"—")});
