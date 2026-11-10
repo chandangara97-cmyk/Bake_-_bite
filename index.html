@@ -1,102 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Freshly Baked Happiness | Bake &amp; Bite</title>
-  <meta name="description" content="Bake & Bite online bakery, cakes and pizza ordering in Tutition, Himachal Pradesh">
-  <link rel="stylesheet" href="assets/style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ETH live price</title>
+<style>
+  :root {
+    --bg: #f5f6fb; --panel: #ffffff; --ink: #151a33; --muted: #6b7194;
+    --line: #dfe2f0; --up: #0f9d6b; --down: #d6455d; --accent: #4b5fd6;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1020; --panel: #151934; --ink: #e8eaf8; --muted: #8a90b8;
+      --line: #262b50; --up: #3ddc97; --down: #ff6b7f; --accent: #8c9eff;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    padding: 24px 16px 48px;
+  }
+  main { max-width: 960px; margin: 0 auto; display: grid; gap: 16px; }
+  header { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  h1 { font-size: 1.05rem; font-weight: 600; margin: 0; }
+  .status { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: .9rem; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--muted); }
+  .dot.live { background: var(--up); }
+  .dot.wait { background: #e0a526; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+  .price {
+    font-size: clamp(2.8rem, 10vw, 5.5rem); font-weight: 700; letter-spacing: -.02em;
+    font-variant-numeric: tabular-nums; line-height: 1.05; margin: 0; transition: color .25s;
+  }
+  .price.up { color: var(--up); }
+  .price.down { color: var(--down); }
+  .pair { color: var(--muted); margin: 0 0 4px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; margin-top: 20px; }
+  .stats dt { color: var(--muted); font-size: .85rem; }
+  .stats dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+  canvas { width: 100%; height: 220px; display: block; }
+  .cols { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: .92rem; }
+  th { text-align: left; color: var(--muted); font-weight: 500; padding: 0 0 8px; }
+  td { padding: 4px 0; }
+  td:nth-child(2), th:nth-child(2), td:nth-child(3), th:nth-child(3) { text-align: right; }
+  .buy { color: var(--up); } .sell { color: var(--down); }
+  .dim { color: var(--muted); }
+  .lvl-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+  .lvl-head h2 { font-size: 1rem; margin: 0; }
+  .lvl-head .ctl { display: flex; align-items: center; gap: 16px; font-size: .9rem; color: var(--muted); }
+  select { background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 4px 8px; font: inherit; }
+  .ladder { list-style: none; margin: 0 0 12px; padding: 0; font-variant-numeric: tabular-nums; }
+  .ladder li { display: grid; grid-template-columns: 2.5rem 1fr 5rem 6rem; gap: 12px; padding: 6px 0; border-top: 1px solid var(--line); }
+  .ladder li:first-child { border-top: 0; }
+  .ladder .res .tag, .ladder .res .p { color: var(--down); font-weight: 600; }
+  .ladder .sup .tag, .ladder .sup .p { color: var(--up); font-weight: 600; }
+  .ladder .now { background: var(--bg); border-radius: 8px; padding: 6px 8px; font-weight: 600; }
+  .ladder .r { text-align: right; }
+  .note { color: var(--muted); font-size: .85rem; margin: 0; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
 </head>
 <body>
-  <div class="topbar">Freshly baked • Fast delivery • Online ordering in Tutition, Himachal Pradesh</div>
-
+<main>
   <header>
-    <div class="container nav">
-      <a class="logo" href="index.html">Bake &amp; Bite<small>BAKERY • CAKES • PIZZA</small></a>
-      <button class="menu-toggle" aria-label="Menu">☰</button>
-      <nav>
-        <a href="index.html" class="active">Home</a>
-        <a href="bakery.html">Bakery</a>
-        <a href="cakes.html">Cakes</a>
-        <a href="pizza.html">Pizza</a>
-        <a href="offers.html">Offers</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-      <div class="icons">
-        <a class="iconbtn" href="cart.html" aria-label="Cart">🛒<sup class="cartcount">0</sup></a>
-        <a class="iconbtn" href="orders.html" aria-label="Orders">👤</a>
-      </div>
-    </div>
+    <h1>Ethereum live trades</h1>
+    <div class="status" role="status" aria-live="polite"><span class="dot wait" id="dot"></span><span id="statusText">Connecting…</span></div>
   </header>
 
-  <section class="hero">
-    <div class="container">
-      <div class="hero-badge">BAKE &amp; BITE</div>
-      <h1>Freshly Baked Happiness</h1>
-      <p>Bakery favourites, custom cakes and hot pizzas — freshly made and delivered to your door. Now order online.</p>
-      <a class="btn orange" href="bakery.html">Shop Now</a>
-    </div>
+  <section class="panel">
+    <p class="pair" id="pair">ETH / USDT</p>
+    <p class="price" id="price" aria-live="off">–</p>
+    <dl class="stats">
+      <div><dt>24h change</dt><dd id="chg">–</dd></div>
+      <div><dt>24h high</dt><dd id="hi">–</dd></div>
+      <div><dt>24h low</dt><dd id="lo">–</dd></div>
+      <div><dt>24h volume (ETH)</dt><dd id="vol">–</dd></div>
+    </dl>
   </section>
 
-  <div class="features">
-    <div class="feature"><span class="feat-icon">🥖</span><b>Fresh Ingredients</b><span>Made fresh every day</span></div>
-    <div class="feature"><span class="feat-icon">✓</span><b>Hygienic &amp; Safe</b><span>Carefully prepared</span></div>
-    <div class="feature"><span class="feat-icon">🚚</span><b>Fast Delivery</b><span>In Tutition</span></div>
-    <div class="feature"><span class="feat-icon">💳</span><b>Easy Payment</b><span>Secure checkout</span></div>
-  </div>
+  <section class="panel"><canvas id="chart" aria-label="Price of the last trades"></canvas></section>
 
-  <section class="section">
-    <div class="container">
-      <h2>Order What You Love</h2>
-      <p class="subtitle">Everything you need for breakfast, celebrations and pizza nights.</p>
-      <div class="categories">
-        <a class="category" style="background-image:url('https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=85')" href="bakery.html">
-          <div><h3>Bakery</h3><span>Fresh breads, buns &amp; pastries</span></div>
-        </a>
-        <a class="category" style="background-image:url('https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=85')" href="cakes.html">
-          <div><h3>Cakes</h3><span>Birthdays, anniversaries &amp; custom</span></div>
-        </a>
-        <a class="category" style="background-image:url('https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=85')" href="pizza.html">
-          <div><h3>Pizza</h3><span>Hot &amp; fresh, veg and non-veg</span></div>
-        </a>
-      </div>
-    </div>
+  <section class="panel">
+    <table>
+      <thead><tr><th>Time</th><th>Price</th><th>Size (ETH)</th></tr></thead>
+      <tbody id="tape"></tbody>
+    </table>
   </section>
 
-  <section class="section" style="background:#fff">
-    <div class="container">
-      <h2>Popular Picks</h2>
-      <p class="subtitle">Customer favourites from Bake &amp; Bite.</p>
-      <div class="grid" id="allGrid"></div>
+  <section class="panel">
+    <div class="lvl-head">
+      <h2>Support and resistance</h2>
+      <div class="ctl">
+        <label>Candles <select id="tf"><option value="15m">15 min</option><option value="1h" selected>1 hour</option><option value="4h">4 hour</option><option value="1d">1 day</option></select></label>
+        <label><input type="checkbox" id="lvOn" checked> Fit chart to levels</label>
+      </div>
     </div>
+    <ul class="ladder" id="ladder"><li class="dim">Loading levels…</li></ul>
+    <p class="note">Levels are swing highs and lows from the last 300 candles, merged when within 0.4% of each other. A level with more touches is stronger. For information only, not financial advice.</p>
   </section>
 
-  <footer>
-    <div class="container footergrid">
-      <div>
-        <div class="logo" style="color:white">Bake &amp; Bite</div>
-        <p style="color:#d9c8bd;margin-top:12px;font-size:14px;line-height:1.6">Fresh bakery products, celebration cakes and hot pizzas for Tutition, Himachal Pradesh.</p>
-      </div>
-      <div>
-        <h3>Shop</h3>
-        <a href="bakery.html">Bakery</a>
-        <a href="cakes.html">Cakes</a>
-        <a href="pizza.html">Pizza</a>
-      </div>
-      <div>
-        <h3>Help</h3>
-        <a href="orders.html">My Orders</a>
-        <a href="contact.html">Contact</a>
-        <a href="cart.html">Cart</a>
-      </div>
-      <div>
-        <h3>Visit</h3>
-        <p style="color:#d9c8bd;font-size:14px;line-height:1.7">Tutition<br>Himachal Pradesh<br>India</p>
-      </div>
-    </div>
-    <div class="container copyright">© 2026 Bake &amp; Bite. All rights reserved.</div>
-  </footer>
+  <p class="note" id="source">Source: Binance public trade stream.</p>
+</main>
 
-  <script src="assets/app.js"></script>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const MAX_POINTS = 300, MAX_ROWS = 14;
+  const fmt = (n, d = 2) => Number(n).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+
+  const feeds = [
+    { name: "Binance", pair: "ETH / USDT", url: "wss://stream.binance.com:9443/ws/ethusdt@trade",
+      parse(m) { return m.e === "trade" ? { price: +m.p, qty: +m.q, time: m.T, buy: !m.m } : null; } },
+    { name: "Coinbase", pair: "ETH / USD", url: "wss://ws-feed.exchange.coinbase.com",
+      sub: { type: "subscribe", product_ids: ["ETH-USD"], channels: ["matches"] },
+      parse(m) { return m.type === "match" || m.type === "last_match"
+        ? { price: +m.price, qty: +m.size, time: Date.parse(m.time), buy: m.side === "sell" } : null; } }
+  ];
+
+  let feedIdx = 0, ws, failures = 0, last = null, levels = [];
+  const points = [];
+  const rows = [];
+
+  function setStatus(state, text) {
+    $("dot").className = "dot " + state;
+    $("statusText").textContent = text;
+  }
+
+  function connect() {
+    const feed = feeds[feedIdx];
+    $("pair").textContent = feed.pair;
+    $("source").textContent = `Source: ${feed.name} public trade stream.`;
+    setStatus("wait", `Connecting to ${feed.name}…`);
+    ws = new WebSocket(feed.url);
+    let opened = false;
+    ws.onopen = () => {
+      opened = true; failures = 0;
+      if (feed.sub) ws.send(JSON.stringify(feed.sub));
+      setStatus("live", `Live · ${feed.name}`);
+    };
+    ws.onmessage = ev => {
+      try { const t = feed.parse(JSON.parse(ev.data)); if (t) onTrade(t); } catch (e) { /* ignore bad frame */ }
+    };
+    ws.onclose = () => {
+      failures = opened ? 0 : failures + 1;
+      if (failures >= 3) { feedIdx = (feedIdx + 1) % feeds.length; failures = 0; }
+      setStatus("wait", "Reconnecting…");
+      setTimeout(connect, Math.min(1000 * 2 ** failures, 8000));
+    };
+    ws.onerror = () => ws.close();
+  }
+
+  function onTrade(t) {
+    const el = $("price");
+    el.textContent = fmt(t.price);
+    if (last !== null && t.price !== last) el.className = "price " + (t.price > last ? "up" : "down");
+    last = t.price;
+    points.push(t.price);
+    if (points.length > MAX_POINTS) points.shift();
+    rows.unshift(t);
+    if (rows.length > MAX_ROWS) rows.pop();
+    schedule();
+  }
+
+  let queued = false;
+  function schedule() {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; drawTape(); drawLadder(); drawChart(); });
+  }
+
+  function drawTape() {
+    $("tape").innerHTML = rows.map(r =>
+      `<tr><td>${new Date(r.time).toLocaleTimeString()}</td>` +
+      `<td class="${r.buy ? "buy" : "sell"}">${fmt(r.price)}</td><td>${fmt(r.qty, 4)}</td></tr>`).join("");
+  }
+
+  function drawChart() {
+    const c = $("chart"), dpr = window.devicePixelRatio || 1;
+    const w = c.clientWidth, h = c.clientHeight;
+    if (c.width !== w * dpr || c.height !== h * dpr) { c.width = w * dpr; c.height = h * dpr; }
+    const g = c.getContext("2d");
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g.clearRect(0, 0, w, h);
+    if (points.length < 2) return;
+    const css = getComputedStyle(document.documentElement);
+    const n = nearest();
+    const extra = $("lvOn").checked && n ? [n.res[0], n.sup[0]].filter(Boolean).map(l => l.price) : [];
+    const span = points.concat(extra);
+    const min = Math.min(...span), max = Math.max(...span), pad = (max - min || 1) * .15;
+    const lo = min - pad, hi = max + pad;
+    const x = i => (i / (MAX_POINTS - 1)) * (w - 56) + 0;
+    const y = p => h - ((p - lo) / (hi - lo)) * h;
+    const offset = MAX_POINTS - points.length;
+    g.strokeStyle = css.getPropertyValue("--line"); g.lineWidth = 1; g.fillStyle = css.getPropertyValue("--muted");
+    g.font = "12px system-ui, sans-serif";
+    for (let k = 0; k <= 3; k++) {
+      const p = lo + ((hi - lo) * k) / 3, yy = y(p);
+      g.beginPath(); g.moveTo(0, yy); g.lineTo(w - 56, yy); g.stroke();
+      g.fillText(fmt(p), w - 52, yy + 4);
+    }
+    g.setLineDash([6, 4]); g.lineWidth = 1;
+    [["R", n.res, "--down"], ["S", n.sup, "--up"]].forEach(([tag, arr, v]) => arr.forEach((l, i) => {
+      if (l.price < lo || l.price > hi) return;
+      const yy = y(l.price);
+      g.strokeStyle = g.fillStyle = css.getPropertyValue(v).trim();
+      g.beginPath(); g.moveTo(0, yy); g.lineTo(w - 56, yy); g.stroke();
+      g.fillText(`${tag}${i + 1}  ${fmt(l.price)}`, 4, yy - 4);
+    }));
+    g.setLineDash([]);
+    g.strokeStyle = css.getPropertyValue("--accent"); g.lineWidth = 2; g.lineJoin = "round";
+    g.beginPath();
+    points.forEach((p, i) => (i ? g.lineTo(x(i + offset), y(p)) : g.moveTo(x(i + offset), y(p))));
+    g.stroke();
+  }
+
+  async function loadStats() {
+    try {
+      const r = await fetch("https://api.binance.com/api/v3/ticker/24hr?symbol=ETHUSDT");
+      const d = await r.json();
+      const pct = +d.priceChangePercent;
+      $("chg").textContent = (pct >= 0 ? "+" : "") + fmt(pct) + "%";
+      $("chg").style.color = pct >= 0 ? "var(--up)" : "var(--down)";
+      $("hi").textContent = fmt(d.highPrice);
+      $("lo").textContent = fmt(d.lowPrice);
+      $("vol").textContent = fmt(d.volume, 0);
+    } catch (e) { /* stats stay as dashes if the REST call is blocked */ }
+  }
+
+  function computeLevels(candles) {
+    const K = 5, hi = candles.map(c => +c[2]), lo = candles.map(c => +c[3]), raw = [];
+    for (let i = K; i < candles.length - K; i++) {
+      if (hi[i] === Math.max(...hi.slice(i - K, i + K + 1))) raw.push(hi[i]);
+      if (lo[i] === Math.min(...lo.slice(i - K, i + K + 1))) raw.push(lo[i]);
+    }
+    raw.sort((a, b) => a - b);
+    const groups = [];
+    for (const p of raw) {
+      const g = groups[groups.length - 1];
+      if (g && p <= (g.sum / g.n) * 1.004) { g.sum += p; g.n++; }
+      else groups.push({ sum: p, n: 1 });
+    }
+    return groups.map(g => ({ price: g.sum / g.n, touches: g.n }));
+  }
+
+  function nearest() {
+    if (last === null) return null;
+    return {
+      res: levels.filter(l => l.price > last).sort((a, b) => a.price - b.price).slice(0, 3),
+      sup: levels.filter(l => l.price <= last).sort((a, b) => b.price - a.price).slice(0, 3)
+    };
+  }
+
+  function drawLadder() {
+    const n = nearest();
+    if (!n) return;
+    const row = (cls, tag, l) => `<li class="${cls}"><span class="tag">${tag}</span><span class="p">${fmt(l.price)}</span>` +
+      `<span class="dim r">${fmt((l.price / last - 1) * 100)}%</span><span class="dim r">${l.touches} touch${l.touches > 1 ? "es" : ""}</span></li>`;
+    const up = n.res.map((l, i) => row("res", "R" + (i + 1), l)).reverse();
+    const down = n.sup.map((l, i) => row("sup", "S" + (i + 1), l));
+    const now = `<li class="now"><span></span><span>${fmt(last)}</span><span class="r dim">Price</span><span></span></li>`;
+    $("ladder").innerHTML = [...up, now, ...down].join("");
+  }
+
+  async function loadLevels() {
+    try {
+      const r = await fetch(`https://api.binance.com/api/v3/klines?symbol=ETHUSDT&interval=${$("tf").value}&limit=300`);
+      levels = computeLevels(await r.json());
+      schedule();
+    } catch (e) {
+      $("ladder").innerHTML = '<li class="dim">Could not load candles to work out levels.</li>';
+    }
+  }
+
+  $("tf").addEventListener("change", loadLevels);
+  $("lvOn").addEventListener("change", schedule);
+  loadLevels(); setInterval(loadLevels, 300000);
+
+  window.addEventListener("resize", schedule);
+  loadStats(); setInterval(loadStats, 30000);
+  connect();
+})();
+</script>
 </body>
 </html>
